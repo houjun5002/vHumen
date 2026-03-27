@@ -16,7 +16,6 @@ import { Screen } from '@/components/Screen';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useTheme } from '@/hooks/useTheme';
-import { useSafeRouter } from '@/hooks/useSafeRouter';
 import { createFormDataFile } from '@/utils';
 import { createStyles } from './styles';
 
@@ -43,7 +42,6 @@ const createPulseAnim = () => new Animated.Value(1);
 export default function HomeScreen() {
   const { theme, isDark } = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const router = useSafeRouter();
 
   // 状态
   const [messages, setMessages] = useState<Message[]>([]);
@@ -397,19 +395,7 @@ export default function HomeScreen() {
           <ThemedText style={styles.headerTitle}>智慧警务助手</ThemedText>
           <ThemedText style={styles.headerSubtitle}>AI数字人警务咨询</ThemedText>
         </View>
-        <TouchableOpacity
-          style={{
-            width: 44,
-            height: 44,
-            borderRadius: 22,
-            backgroundColor: 'rgba(30, 58, 138, 0.5)',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-          onPress={() => router.push('/voice-chat')}
-        >
-          <FontAwesome6 name="microphone" size={20} color="#93C5FD" />
-        </TouchableOpacity>
+        <FontAwesome6 name="shield-halved" size={24} color="#93C5FD" />
       </View>
 
       {/* 合规提示 */}

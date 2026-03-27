@@ -230,6 +230,14 @@ export const createStyles = (theme: Theme) => {
       fontSize: 12,
       color: '#93C5FD',
     },
+    headerButton: {
+      width: 44,
+      height: 44,
+      borderRadius: 22,
+      backgroundColor: 'rgba(147, 197, 253, 0.15)',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
     // 打字指示器
     typingIndicator: {
       flexDirection: 'row',

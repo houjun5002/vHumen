@@ -1,8 +1,8 @@
 import { ExpoConfig, ConfigContext } from 'expo/config';
 
-const appName = process.env.COZE_PROJECT_NAME || process.env.EXPO_PUBLIC_COZE_PROJECT_NAME || '应用';
-const projectId = process.env.COZE_PROJECT_ID || process.env.EXPO_PUBLIC_COZE_PROJECT_ID;
-const slugAppName = projectId ? `app${projectId}` : 'myapp';
+const appName = '智慧警务助手';
+const projectId = process.env.COZE_PROJECT_ID || process.env.EXPO_PUBLIC_COZE_PROJECT_ID || '7621764884178583552';
+const slugAppName = `police-assistant-${projectId}`;
 
 export default ({ config }: ConfigContext): ExpoConfig => {
   return {
@@ -12,18 +12,21 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "police-assistant",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "智慧警务助手需要访问麦克风以进行语音对话"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#0A1628"
       },
-      "package": `com.anonymous.x${projectId || '0'}`
+      "package": "com.police.assistant.app"
     },
     "web": {
       "bundler": "metro",
@@ -43,34 +46,30 @@ export default ({ config }: ConfigContext): ExpoConfig => {
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#0A1628"
+        }
+      ],
+      [
+        "expo-av",
+        {
+          "microphonePermission": "智慧警务助手需要访问麦克风以进行语音对话"
         }
       ],
       [
         "expo-image-picker",
         {
-          "photosPermission": `允许新项目访问您的相册，以便您上传或保存图片。`,
-          "cameraPermission": `允许新项目使用您的相机，以便您直接拍摄照片上传。`,
-          "microphonePermission": `允许新项目访问您的麦克风，以便您拍摄带有声音的视频。`
-        }
-      ],
-      [
-        "expo-location",
-        {
-          "locationWhenInUsePermission": `新项目需要访问您的位置以提供周边服务及导航功能。`
-        }
-      ],
-      [
-        "expo-camera",
-        {
-          "cameraPermission": `新项目需要访问相机以拍摄照片和视频。`,
-          "microphonePermission": `新项目需要访问麦克风以录制视频声音。`,
-          "recordAudioAndroid": true
+          "photosPermission": "智慧警务助手需要访问相册以上传图片",
+          "cameraPermission": "智慧警务助手需要访问相机以拍摄照片"
         }
       ]
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": projectId
+      }
     }
   }
 }

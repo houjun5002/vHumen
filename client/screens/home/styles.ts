@@ -179,6 +179,7 @@ export const createStyles = (theme: Theme) => {
       justifyContent: 'center',
       alignItems: 'center',
       paddingHorizontal: Spacing['2xl'],
+      paddingBottom: 150,
     },
     welcomeTitle: {
       fontSize: 20,

@@ -1,14 +1,12 @@
 import { ExpoConfig, ConfigContext } from 'expo/config';
 
 const appName = '智慧警务助手';
-const projectId = process.env.COZE_PROJECT_ID || process.env.EXPO_PUBLIC_COZE_PROJECT_ID || '7621764884178583552';
-const slugAppName = `police-assistant-${projectId}`;
 
 export default ({ config }: ConfigContext): ExpoConfig => {
   return {
     ...config,
     "name": appName,
-    "slug": slugAppName,
+    "slug": "police-assistant",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -60,14 +58,6 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     ],
     "experiments": {
       "typedRoutes": true
-    },
-    "extra": {
-      "eas": {
-        "projectId": projectId
-      }
-    },
-    "cli": {
-      "appVersionSource": "remote"
     }
   }
 }

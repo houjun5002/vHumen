@@ -40,9 +40,10 @@ export default function VoiceChatScreen() {
   const [isRecording, setIsRecording] = useState(false);
   const [isThinking, setIsThinking] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [currentText, setCurrentText] = useState('点击麦克风开始对话');
+  const [currentText, setCurrentText] = useState('准备开始对话...');
   const [messages, setMessages] = useState<Message[]>([]);
   const [statusText, setStatusText] = useState('');
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   // 引用
   const recordingRef = useRef<Audio.Recording | null>(null);
@@ -116,6 +117,18 @@ export default function VoiceChatScreen() {
       }
     };
   }, []);
+
+  // 页面加载后自动开始录音
+  useEffect(() => {
+    if (isFirstLoad && !isRecording && !isThinking && !isSpeaking) {
+      setIsFirstLoad(false);
+      // 延迟一小段时间让页面渲染完成
+      const timer = setTimeout(() => {
+        startRecording();
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [isFirstLoad]);
 
   // 开始录音
   const startRecording = async () => {
@@ -294,7 +307,11 @@ export default function VoiceChatScreen() {
           if (status.isLoaded && status.didJustFinish) {
             setIsSpeaking(false);
             setStatusText('');
-            setCurrentText('点击麦克风继续对话');
+            setCurrentText('准备开始下一轮对话...');
+            // 自动开始下一轮录音
+            setTimeout(() => {
+              startRecording();
+            }, 500);
           }
         });
       } else {
@@ -404,12 +421,11 @@ export default function VoiceChatScreen() {
 
           {/* 底部控制区 */}
           <View style={styles.controlArea}>
-            {/* 主按钮 */}
+            {/* 主按钮 - 自动录音模式下点击停止并发送 */}
             <TouchableOpacity
               activeOpacity={0.8}
-              onPressIn={isDisabled ? undefined : startRecording}
-              onPressOut={isDisabled ? undefined : stopRecording}
-              disabled={isDisabled}
+              onPress={isRecording ? stopRecording : undefined}
+              disabled={isDisabled || (!isRecording && !isDisabled)}
               style={[
                 styles.mainButton,
                 isRecording && styles.mainButtonActive,
@@ -429,7 +445,7 @@ export default function VoiceChatScreen() {
             <ThemedText style={styles.hintText}>
               {isDisabled 
                 ? (isThinking ? '思考中...' : '播放中...')
-                : (isRecording ? '松开发送' : '按住说话')
+                : (isRecording ? '点击停止发送' : '等待中...')
               }
             </ThemedText>
 
@@ -439,7 +455,11 @@ export default function VoiceChatScreen() {
                 style={styles.actionButton}
                 onPress={() => {
                   setMessages([]);
-                  setCurrentText('点击麦克风开始对话');
+                  setCurrentText('准备开始对话...');
+                  // 重新开始录音
+                  if (!isRecording && !isThinking && !isSpeaking) {
+                    startRecording();
+                  }
                 }}
               >
                 <ThemedText style={styles.actionButtonText}>清空对话</ThemedText>

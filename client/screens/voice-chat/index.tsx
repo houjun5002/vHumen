@@ -43,7 +43,6 @@ export default function VoiceChatScreen() {
   const [currentText, setCurrentText] = useState('准备开始对话...');
   const [messages, setMessages] = useState<Message[]>([]);
   const [statusText, setStatusText] = useState('');
-  const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   // 引用
   const recordingRef = useRef<Audio.Recording | null>(null);
@@ -120,15 +119,48 @@ export default function VoiceChatScreen() {
 
   // 页面加载后自动开始录音
   useEffect(() => {
-    if (isFirstLoad && !isRecording && !isThinking && !isSpeaking) {
-      setIsFirstLoad(false);
-      // 延迟一小段时间让页面渲染完成
-      const timer = setTimeout(() => {
-        startRecording();
-      }, 500);
-      return () => clearTimeout(timer);
-    }
-  }, [isFirstLoad]);
+    // 使用 ref 跟踪是否已初始化，避免重复触发
+    let mounted = true;
+    
+    const initRecording = async () => {
+      // 等待页面渲染完成
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
+      if (mounted) {
+        try {
+          const { status } = await Audio.requestPermissionsAsync();
+          if (status !== 'granted') {
+            alert('需要麦克风权限才能使用语音功能');
+            return;
+          }
+
+          await Audio.setAudioModeAsync({
+            allowsRecordingIOS: true,
+            playsInSilentModeIOS: true,
+          });
+
+          const { recording } = await Audio.Recording.createAsync(
+            Audio.RecordingOptionsPresets.HIGH_QUALITY
+          );
+          
+          if (mounted) {
+            recordingRef.current = recording;
+            setIsRecording(true);
+            setCurrentText('正在聆听...');
+            setStatusText('点击按钮停止发送');
+          }
+        } catch (error) {
+          console.error('Failed to start recording:', error);
+        }
+      }
+    };
+
+    initRecording();
+
+    return () => {
+      mounted = false;
+    };
+  }, []); // 空依赖数组，只在组件挂载时执行一次
 
   // 开始录音
   const startRecording = async () => {

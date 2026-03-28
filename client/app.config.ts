@@ -34,12 +34,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      process.env.EXPO_PUBLIC_BACKEND_BASE_URL ? [
-        "expo-router",
-        {
-          "origin": process.env.EXPO_PUBLIC_BACKEND_BASE_URL
-        }
-      ] : 'expo-router',
+      "expo-router",
       [
         "expo-splash-screen",
         {
@@ -70,6 +65,9 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       "eas": {
         "projectId": projectId
       }
+    },
+    "cli": {
+      "appVersionSource": "remote"
     }
   }
 }

@@ -1,6 +1,7 @@
 {
   "cli": {
-    "version": ">= 13.2.0"
+    "version": ">= 13.2.0",
+    "appVersionSource": "remote"
   },
   "build": {
     "development": {
@@ -11,11 +12,17 @@
       "distribution": "internal",
       "android": {
         "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_BACKEND_BASE_URL": "https://742b3b55-7c40-4cb0-a2a6-12465f63c223.dev.coze.site"
       }
     },
     "production": {
       "android": {
         "buildType": "app-bundle"
+      },
+      "env": {
+        "EXPO_PUBLIC_BACKEND_BASE_URL": "https://742b3b55-7c40-4cb0-a2a6-12465f63c223.dev.coze.site"
       }
     }
   },

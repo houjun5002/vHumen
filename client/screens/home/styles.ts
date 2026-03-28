@@ -12,11 +12,10 @@ export const createStyles = (theme: Theme) => {
     },
     // 视频区域
     videoContainer: {
-      flex: 1,
       backgroundColor: '#0A1628', // 深蓝色背景
       justifyContent: 'center',
       alignItems: 'center',
-      minHeight: 300,
+      height: 120,
       position: 'relative',
     },
     videoPlaceholder: {
@@ -27,13 +26,13 @@ export const createStyles = (theme: Theme) => {
       backgroundColor: '#0A1628',
     },
     avatarContainer: {
-      width: 200,
-      height: 200,
-      borderRadius: 100,
+      width: 80,
+      height: 80,
+      borderRadius: 40,
       backgroundColor: 'rgba(30, 58, 138, 0.3)',
       justifyContent: 'center',
       alignItems: 'center',
-      borderWidth: 3,
+      borderWidth: 2,
       borderColor: '#1E3A8A',
     },
     avatarIcon: {
@@ -82,9 +81,6 @@ export const createStyles = (theme: Theme) => {
     chatContainer: {
       flex: 1,
       backgroundColor: theme.backgroundDefault,
-      borderTopLeftRadius: BorderRadius.xl,
-      borderTopRightRadius: BorderRadius.xl,
-      marginTop: -20,
       paddingTop: Spacing.lg,
     },
     messagesContainer: {
@@ -179,7 +175,7 @@ export const createStyles = (theme: Theme) => {
       justifyContent: 'center',
       alignItems: 'center',
       paddingHorizontal: Spacing['2xl'],
-      paddingBottom: 500,
+      paddingVertical: Spacing['2xl'],
     },
     welcomeTitle: {
       fontSize: 20,

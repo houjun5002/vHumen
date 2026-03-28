@@ -419,7 +419,7 @@ export default function HomeScreen() {
           <View style={styles.avatarContainer}>
             <FontAwesome6
               name="user-tie"
-              size={60}
+              size={32}
               color="#93C5FD"
             />
           </View>

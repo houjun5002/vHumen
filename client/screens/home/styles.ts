@@ -155,14 +155,12 @@ export const createStyles = (theme: Theme) => {
       borderRadius: BorderRadius.xl,
       paddingHorizontal: Spacing.lg,
       paddingVertical: Spacing.md,
-      minHeight: 120,
+      minHeight: 48,
       justifyContent: 'center',
     },
     textInput: {
       fontSize: 15,
       color: theme.textPrimary,
-      minHeight: 90,
-      textAlignVertical: 'top',
     },
     sendButton: {
       width: 44,
